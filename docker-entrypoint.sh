@@ -44,10 +44,26 @@ _deploy_bootstrap() {
 	echo "done"
 }
 
+_update_init_node() {
+	echo "Updating XPd initial nodes..."
+	cat << EOS >> ${XPD_DATA_DIR}/XP.conf
+
+addnode=45.32.45.43
+addnode=45.77.2.104
+addnode=45.63.94.41
+addnode=45.32.220.209
+addnode=45.63.65.48
+addnode=45.77.107.76
+addnode=45.32.175.194
+EOS
+    echo "done"
+}
+
 if [ ! -d ${XPD_DATA_DIR}/database ]; then
 	_init_datafiles
 	_download_from_dropbox bootstrap-latest.zip
 	_deploy_bootstrap bootstrap-latest.zip ziptemp
+	_update_init_node
 fi
 
 exec "$@"
