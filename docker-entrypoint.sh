@@ -12,7 +12,7 @@ ZIP_TEMP_DIR=ziptemp
 
 _init_datafiles() {
 	echo "Initializing data files..."
-	timeout 3 XPd
+	timeout 3 XPd --printtoconsole
 	echo "done"
 }
 

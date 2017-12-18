@@ -89,4 +89,4 @@ USER wallet
 VOLUME ["${XPD_DATA_DIR}"]
 EXPOSE 28191 28192
 ENTRYPOINT ["/home/wallet/docker-entrypoint.sh"]
-CMD ["/usr/local/bin/XPd"]
+CMD ["/usr/local/bin/XPd", "--printtoconsole"]
