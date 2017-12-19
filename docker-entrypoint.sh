@@ -52,8 +52,8 @@ _deploy_bootstrap() {
 
 _update_init_node() {
 	echo "Updating XPd initial nodes..."
+	sed -i -e '/^addnode/d' ${XPD_DATA_DIR}/XP.conf
 	cat << EOS >> ${XPD_DATA_DIR}/XP.conf
-
 addnode=45.32.45.43
 addnode=45.77.2.104
 addnode=45.63.94.41
