@@ -30,6 +30,12 @@ _download_from_dropbox() {
 	echo "done"
 }
 
+_download_from_conoha() {
+	echo "Downloading bootstrap..."
+	curl -Ls "https://object-storage.tyo1.conoha.io/v1/nc_c17ae3d951a84d7ba2a9d28bf2bbfbd7/XPbootstrap/xpcoin-bootstrap-peers.zip" -o $1
+	echo "done"
+}
+
 _deploy_bootstrap() {
 	echo "Extracting bootstrap..."
 	rm -f ${XPD_DATA_DIR}/database/*
@@ -61,7 +67,7 @@ EOS
 
 if [ ! -d ${XPD_DATA_DIR}/database ]; then
 	_init_datafiles
-	_download_from_dropbox bootstrap-latest.zip
+	_download_from_conoha bootstrap-latest.zip
 	_deploy_bootstrap bootstrap-latest.zip ziptemp
 	_update_init_node
 fi
