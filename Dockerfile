@@ -6,22 +6,6 @@ RUN \
     "s@http://archive\.ubuntu\.com@http://ftp\.riken\.go\.jp/Linux/ubuntu@" \
     /etc/apt/sources.list
 
-# Basic settings (Locales, timezone, etc)
-RUN \
-  apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    apt-utils && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    language-pack-ja language-pack-en tzdata software-properties-common && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* && \
-  update-locale LANG=ja_JP.UTF-8 && \
-  ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-  dpkg-reconfigure --frontend noninteractive tzdata
-ENV \
-  LANG=ja_JP.utf8 \
-  XPD_DATA_DIR=/home/wallet/.XP
-
 # Install gosu
 ENV GOSU_VERSION 1.10
 RUN set -ex; \
@@ -46,31 +30,52 @@ RUN set -ex; \
   \
   chmod +x /usr/local/bin/gosu; \
 # verify that the binary works
-  gosu nobody true
+  gosu nobody true; \
+  \
+	apt-get purge -y --auto-remove $fetchDeps
 
-# Prepare for build
+# Basic settings (Locales, timezone, etc)
 RUN \
-  add-apt-repository ppa:bitcoin/bitcoin -y && \
+  apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    apt-utils && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    language-pack-ja language-pack-en tzdata software-properties-common && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/* && \
+  update-locale LANG=ja_JP.UTF-8 && \
+  ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+  dpkg-reconfigure --frontend noninteractive tzdata
+ENV \
+  LANG=ja_JP.utf8 \
+  XPD_DATA_DIR=/home/wallet/.XP
+
+# Create a normal user
+RUN \
+  useradd -d /home/wallet -m -s /bin/bash wallet
+
+# Prepare for build XPd
+WORKDIR /usr/src
+RUN \
+  apt-add-repository ppa:bitcoin/bitcoin -y && \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    build-essential libssl-dev libdb4.8-dev libdb4.8++-dev \
-    libboost-all-dev libqrencode-dev git curl unzip && \
+    build-essential libssl-dev libdb4.8-dev libdb4.8++-dev libboost-all-dev \
+    libqrencode-dev ca-certificates git curl unzip && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
-# Build as a normal user
+# Build XPd
 RUN \
-  useradd -d /home/wallet -m -s /bin/bash wallet
-WORKDIR /home/wallet
-RUN \
-  gosu wallet git clone https://github.com/eXperiencePoints/XPCoin && \
+  git clone https://github.com/eXperiencePoints/XPCoin && \
   cd XPCoin/src && \
-  gosu wallet make -f makefile.unix && \
-  gosu wallet chmod +x XPd && \
-  chown root:root XPd && \
+  make -f makefile.unix && \
+  chmod +x XPd && \
   mv XPd /usr/local/bin && \
-  gosu wallet rm -fr /home/wallet/XPCoin
+  cd /usr/src && \
+  rm -fr /usr/src/XPCoin
 
+# Place an entrypoint script
 COPY docker-entrypoint.sh /home/wallet/
 RUN \
   gosu wallet mkdir ${XPD_DATA_DIR} && \
@@ -86,6 +91,7 @@ RUN \
 #   echo "wallet ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wallet
 
 USER wallet
+WORKDIR /home/wallet
 VOLUME ["${XPD_DATA_DIR}"]
 EXPOSE 28191 28192
 ENTRYPOINT ["/home/wallet/docker-entrypoint.sh"]
