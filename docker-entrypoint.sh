@@ -46,7 +46,11 @@ _download_from_conoha() {
 
 _deploy_bootstrap() {
 	echo "Extracting bootstrap..."
-	rm -f ${XPD_DATA_DIR}/database/*
+	if [ -d ${XPD_DATA_DIR}/database ]; then
+		rm -f ${XPD_DATA_DIR}/database/*
+	else
+		mkdir -p ${XPD_DATA_DIR}/database
+	fi
 	rm -fr $2/*
 	unzip -d $2 $1
 	for CONTENT_FILE in $(find ${2} -type f -and -not -name readme.txt -and -not -name xpcoin-startkit_v1.0.bat -and -not -name wallet.dat)
