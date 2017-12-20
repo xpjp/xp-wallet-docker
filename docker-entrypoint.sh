@@ -12,7 +12,14 @@ ZIP_TEMP_DIR=ziptemp
 
 _init_datafiles() {
 	echo "Initializing data files..."
-	timeout 3 XPd --printtoconsole
+	XPd --printtoconsole | while read i
+	do
+		echo $i | grep -q 'ThreadDNSAddressSeed exited'
+		if [ $? = "0" ]; then
+			kill -TERM $(pidof XPd)
+			break
+		fi
+	done
 	echo "done"
 }
 
@@ -38,13 +45,19 @@ _download_from_conoha() {
 
 _deploy_bootstrap() {
 	echo "Extracting bootstrap..."
-	rm -f ${XPD_DATA_DIR}/database/*
+	if [ -d ${XPD_DATA_DIR}/database ]; then
+		rm -f ${XPD_DATA_DIR}/database/*
+	else
+		mkdir -p ${XPD_DATA_DIR}/database
+	fi
 	rm -fr $2/*
-	unzip -d $2 $1
+	unzip -qq -d $2 $1
 	for CONTENT_FILE in $(find ${2} -type f -and -not -name readme.txt -and -not -name xpcoin-startkit_v1.0.bat -and -not -name wallet.dat)
 	do
 		mv ${CONTENT_FILE} ${XPD_DATA_DIR}/$(echo ${CONTENT_FILE} | sed -r 's/^([^\/]*\/){2}//')
 	done
+	chmod 600 ${XPD_DATA_DIR}/*.dat
+	chmod 600 ${XPD_DATA_DIR}/database/*
 	rm -fr $2
 	rm -f $1
 	echo "done"
@@ -70,6 +83,8 @@ if [ ! -d ${XPD_DATA_DIR}/database ]; then
 	_download_from_conoha bootstrap-latest.zip
 	_deploy_bootstrap bootstrap-latest.zip ziptemp
 	_update_init_node
+	echo "All initialize process has be done. Proceed to boot XPd."
+	echo "On first boot, it will take over 10 minutes or more. Please wait patiently."
 fi
 
 exec "$@"
