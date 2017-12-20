@@ -3,7 +3,7 @@ services:
   wallet:
     build:
       context: .
-    image: moochanne/xpd
+    image: moochannel/xpd
     ports:
       - 28192:28192
     volumes:
