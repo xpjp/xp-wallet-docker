@@ -12,7 +12,15 @@ ZIP_TEMP_DIR=ziptemp
 
 _init_datafiles() {
 	echo "Initializing data files..."
-	timeout 3 XPd --printtoconsole
+	XPd --printtoconsole | while read i
+	do
+		echo $i
+		echo $i | grep -q 'ThreadDNSAddressSeed exited'
+		if [ $? = "0" ]; then
+			kill -TERM $(pidof XPd)
+			break
+		fi
+	done
 	echo "done"
 }
 
