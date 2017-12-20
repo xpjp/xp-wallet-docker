@@ -76,11 +76,10 @@ RUN \
   rm -fr /usr/src/XPCoin
 
 # Place an entrypoint script
-COPY docker-entrypoint.sh /home/wallet/
+COPY docker-entrypoint.sh /
 RUN \
-  gosu wallet mkdir ${XPD_DATA_DIR} && \
-  chown wallet:wallet /home/wallet/docker-entrypoint.sh && \
-  chmod +x /home/wallet/docker-entrypoint.sh
+  chmod +x /docker-entrypoint.sh && \
+  gosu wallet mkdir ${XPD_DATA_DIR}
 
 # RUN \
 #   apt-get update && \
@@ -94,5 +93,5 @@ USER wallet
 WORKDIR /home/wallet
 VOLUME ["${XPD_DATA_DIR}"]
 EXPOSE 28191 28192
-ENTRYPOINT ["/home/wallet/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/local/bin/XPd", "--printtoconsole"]
