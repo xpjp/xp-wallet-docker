@@ -1,0 +1,12 @@
+version: "2"
+services:
+  wallet:
+    build:
+      context: .
+    image: moochannel/xpd
+    ports:
+      - 28192:28192
+    volumes:
+      - wallet-data:/home/wallet/.XP
+volumes:
+  wallet-data:
