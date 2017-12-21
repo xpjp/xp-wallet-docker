@@ -84,7 +84,7 @@ if [ ! -d ${XPD_DATA_DIR}/database ]; then
 	_deploy_bootstrap bootstrap-latest.zip ziptemp
 	_update_init_node
 	echo "All initialize process has be done. Proceed to boot XPd."
-	echo "On first boot, it will take over 10 minutes or more. Please wait patiently."
 fi
 
+echo "When XPd is starting, it may take over 10 minutes or more. Please wait patiently."
 exec "$@"
