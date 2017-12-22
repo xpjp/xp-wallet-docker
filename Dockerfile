@@ -69,6 +69,7 @@ RUN \
 RUN \
   git clone https://github.com/eXperiencePoints/XPCoin && \
   cd XPCoin/src && \
+  git checkout fab2f2c1a156a8d28301c5376104f19c0213b50f && \
   make -f makefile.unix && \
   chmod +x XPd && \
   mv XPd /usr/local/bin && \
