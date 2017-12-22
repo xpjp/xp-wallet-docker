@@ -1,10 +1,10 @@
 FROM ubuntu:xenial
 
-# Change APT source and set locale
-RUN \
-  sed -i".bak" \
-    "s@http://archive\.ubuntu\.com@http://ftp\.riken\.go\.jp/Linux/ubuntu@" \
-    /etc/apt/sources.list
+# Change APT source
+# RUN \
+#   sed -i".bak" \
+#     "s@http://archive\.ubuntu\.com@http://ftp\.riken\.go\.jp/Linux/ubuntu@" \
+#     /etc/apt/sources.list
 
 # Install gosu
 ENV GOSU_VERSION 1.10
@@ -34,20 +34,17 @@ RUN set -ex; \
   \
 	apt-get purge -y --auto-remove $fetchDeps
 
-# Basic settings (Locales, timezone, etc)
+# Basic settings
 RUN \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     apt-utils && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    language-pack-ja language-pack-en tzdata software-properties-common && \
+    language-pack-en tzdata software-properties-common && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
-  update-locale LANG=ja_JP.UTF-8 && \
-  ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-  dpkg-reconfigure --frontend noninteractive tzdata
+  update-locale LANG=en_US.UTF-8
 ENV \
-  LANG=ja_JP.utf8 \
   XPD_DATA_DIR=/home/wallet/.XP
 
 # Create a normal user
