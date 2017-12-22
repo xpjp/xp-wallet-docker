@@ -5,8 +5,7 @@ if [ "${1:0:1}" = '-' ]; then
 	set -- XPd "$@"
 fi
 
-#FILEID="1uKV7vd4FTm457rG9CoUPzZgP2j4W_TYd"
-FILEID="1DZx3mzj81MYwV1QXtGXTEQ-1CXFfaHUX"
+FILEID="1uKV7vd4FTm457rG9CoUPzZgP2j4W_TYd"
 ZIP_TEMP_FILE=bootstrap.zip
 ZIP_TEMP_DIR=ziptemp
 
@@ -86,5 +85,5 @@ if [ ! -d ${XPD_DATA_DIR}/database ]; then
 	echo "All initialize process has be done. Proceed to boot XPd."
 fi
 
-echo "When XPd is starting, it may take over 10 minutes or more. Please wait patiently."
+echo "On starting XPd, it may take over 10 minutes or more. Please wait patiently."
 exec "$@"
