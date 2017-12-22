@@ -63,10 +63,10 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 
 # Build XPd
+ARG XPD_VER=1.1.0
 RUN \
-  git clone https://github.com/eXperiencePoints/XPCoin && \
+  git clone https://github.com/eXperiencePoints/XPCoin -b ${XPD_VER} && \
   cd XPCoin/src && \
-  git checkout fab2f2c1a156a8d28301c5376104f19c0213b50f && \
   make -f makefile.unix && \
   chmod +x XPd && \
   mv XPd /usr/local/bin && \
