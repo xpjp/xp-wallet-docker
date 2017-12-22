@@ -2,6 +2,8 @@
 
 Dockerized XPCoin Wallet
 
+Japanese README is [here](https://github.com/moochannel/xp-wallet-docker/blob/master/README.ja.md)
+
 ## Description
 
 XPd is an XPCoin daemon program aka XPCoin Wallet.

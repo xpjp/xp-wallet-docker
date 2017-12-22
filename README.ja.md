@@ -2,6 +2,8 @@
 
 XPd(XPCoinウォレット)をDocker化します。
 
+英語版のREADMEは[こちら](https://github.com/moochannel/xp-wallet-docker/blob/master/README.md)
+
 ## Description
 
 XPdはXPdウォレットという名で知られるXPCoinのデーモンプログラムです。
