@@ -3,4 +3,6 @@ services:
   wallet:
     build:
       context: .
-    image: moochannel/xpd
+    image: xpd-dev
+    ports:
+      - 28192:28192
