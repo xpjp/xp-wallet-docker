@@ -1,7 +1,7 @@
 version: "2"
 services:
   wallet:
-    image: moochannel/xpd
+    image: xpjp/xpd
     ports:
       - 28192:28192
     volumes:
