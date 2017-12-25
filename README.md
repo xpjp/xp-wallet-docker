@@ -2,7 +2,7 @@
 
 Dockerized XPCoin Wallet
 
-Japanese README is [here](https://github.com/moochannel/xp-wallet-docker/blob/master/README.ja.md)
+Japanese README is [here](https://github.com/xpjp/xp-wallet-docker/blob/master/README.ja.md)
 
 ## Description
 
@@ -26,7 +26,7 @@ Start:
 1. Watch container log with `docker-compose logs wallet` as you need.
 
 ```shell
-$ curl -L https://raw.githubusercontent.com/moochannel/xp-wallet-docker/master/docker-compose.yml -o docker-compose.yml     #  (1)
+$ curl -L https://raw.githubusercontent.com/xpjp/xp-wallet-docker/master/docker-compose.yml -o docker-compose.yml     #  (1)
 $ docker-compose up -d              #  (2)
 
 $ docker-compose logs -f wallet     #  (3)
@@ -76,11 +76,11 @@ You can run XPd container without `docker-compose.yml` file.
 
 Start:
 
-1. Run daemon with `docker run -d [options] moochannel/xpd` command.
+1. Run daemon with `docker run -d [options] xpjp/xpd` command.
 1. Watch container log with `docker logs -f <container-id>` as you need.
 
 ```shell
-$ docker run -d -v </path/to/dir>:/home/wallet/.XP -p 28192:28192 moochannel/xpd        #  (1)
+$ docker run -d -v </path/to/dir>:/home/wallet/.XP -p 28192:28192 xpjp/xpd        #  (1)
 $ docker ps     #  Looking for container id
 $ docker logs -f <container-id>     #  (2)
 ```
@@ -96,7 +96,7 @@ $ docker rm <container-id>      #  as you need.
 
 ## License
 
-[MIT](https://github.com/moochannel/xp-wallet-docker/blob/master/LICENSE)
+[MIT](https://github.com/xpjp/xp-wallet-docker/blob/master/LICENSE)
 
 ## Author
 

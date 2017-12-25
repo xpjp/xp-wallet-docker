@@ -2,7 +2,7 @@
 
 XPd(XPCoinウォレット)をDocker化します。
 
-英語版のREADMEは[こちら](https://github.com/moochannel/xp-wallet-docker/blob/master/README.md)
+英語版のREADMEは[こちら](https://github.com/xpjp/xp-wallet-docker/blob/master/README.md)
 
 ## Description
 
@@ -26,7 +26,7 @@ docker-composeが使える状態であることが前提です。
 1. 必要に応じて`docker-compose logs wallet`でログを表示します。
 
 ```shell
-$ curl -L https://raw.githubusercontent.com/moochannel/xp-wallet-docker/master/docker-compose.yml -o docker-compose.yml     #  (1)
+$ curl -L https://raw.githubusercontent.com/xpjp/xp-wallet-docker/master/docker-compose.yml -o docker-compose.yml     #  (1)
 $ docker-compose up -d            #  (2)
 
 $ docker-compose logs -f wallet   #  (3)
@@ -81,11 +81,11 @@ Dockerfileでは 28191/tcp もEXPOSEに記載していますが、このポー�
 
 起動:
 
-1. `docker run -d [options] moochannel/xpd`を実行してXPdを起動します。
+1. `docker run -d [options] xpjp/xpd`を実行してXPdを起動します。
 1. 必要に応じて`docker logs -f <コンテナID>`でログを表示します。
 
 ```shell
-$ docker run -d -v </path/to/dir>:/home/wallet/.XP -p 28192:28192 moochannel/xpd    #  (1)
+$ docker run -d -v </path/to/dir>:/home/wallet/.XP -p 28192:28192 xpjp/xpd    #  (1)
 $ docker ps                     #  コンテナIDを調べます
 $ docker logs -f <コンテナID>   #  (2)
 ```
@@ -101,7 +101,7 @@ $ docker rm <コンテナID>      #  as you need.
 
 ## License
 
-[MIT](https://github.com/moochannel/xp-wallet-docker/blob/master/LICENSE)
+[MIT](https://github.com/xpjp/xp-wallet-docker/blob/master/LICENSE)
 
 ## Author
 
