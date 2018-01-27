@@ -59,9 +59,10 @@ volumes:
 ↓
 volumes:
   wallet-data:
-    type: none
-    device: /path/to/data_dir
-    o: bind
+    driver_opts:
+      type: none
+      device: /path/to/data_dir
+      o: bind
 ```
 
 この設定では`docker-compose down -v`や`docker volume prune`といった
