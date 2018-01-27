@@ -57,9 +57,10 @@ volumes:
 ↓
 volumes:
   wallet-data:
-    type: none
-    device: /path/to/data_dir
-    o: bind
+    driver_opts:
+      type: none
+      device: /path/to/data_dir
+      o: bind
 ```
 
 With this setting, even if you remove the volume with docker commands like `docker-compose down -v` or `docker volume prune`, the payload of the data directory will remain in the host.
