@@ -63,7 +63,7 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 
 # Build XPd
-ARG XPD_VER=1.1.0
+ARG XPD_VER=1.1.0.2
 RUN \
   git clone https://github.com/eXperiencePoints/XPCoin -b ${XPD_VER} && \
   cd XPCoin/src && \
